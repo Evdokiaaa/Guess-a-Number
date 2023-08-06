@@ -4,7 +4,9 @@ let highscore = 0;
 
 document.querySelector(".guess").addEventListener("input", (e) => {
   if (
-    e.target.value.length > e.target.max.length || parseInt(e.target.value) > 30){
+    e.target.value.length > e.target.max.length ||
+    parseInt(e.target.value) > 30
+  ) {
     if (e.target.value.length > e.target.max.length) {
       e.target.value = e.target.value.slice(0, e.target.max.length);
     } else {
@@ -17,24 +19,19 @@ const showMessage = (msg) => {
   document.querySelector(".guessing").textContent = msg;
 };
 document.querySelector(".check").addEventListener("click", () => {
-
   const guess = Number(document.querySelector(".guess").value);
-  console.log(guess);
   if (!guess) {
     showMessage("⛔  No number");
   } else if (guess === randomNumber) {
     showMessage("🎉 Correct!");
     document.body.style.background = "#5da341";
     document.querySelector(".number").textContent = guess;
-    document.querySelector('.guess').setAttribute('disabled','disabled')
+    document.querySelector(".guess").setAttribute("disabled", "disabled");
     if (score > highscore) {
       highscore = score;
       document.querySelector(".highscore__score").textContent = score;
     }
-
-  }
-
-  else if (guess !== randomNumber) {
+  } else if (guess !== randomNumber) {
     if (score > 1) {
       showMessage(guess > randomNumber ? "📈 Too high" : "📉 Too low");
       score--;
@@ -42,8 +39,7 @@ document.querySelector(".check").addEventListener("click", () => {
     } else {
       showMessage("💀 You lost the game");
       document.querySelector(".attempt").textContent = 0;
-      document.querySelector('.guess').setAttribute('disabled','disabled')
-
+      document.querySelector(".guess").setAttribute("disabled", "disabled");
     }
   }
 });
@@ -55,6 +51,5 @@ document.querySelector(".again").addEventListener("click", () => {
   document.querySelector(".number").textContent = "?";
   document.querySelector(".guess").value = "";
   document.querySelector("body").style.background = "#222";
-  document.querySelector('.guess').removeAttribute('disabled')
-
+  document.querySelector(".guess").removeAttribute("disabled");
 });
