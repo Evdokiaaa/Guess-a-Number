@@ -3,11 +3,8 @@ let score = 20;
 let highscore = 0;
 
 document.querySelector(".guess").addEventListener("input", (e) => {
-  console.log("1");
   if (
-    e.target.value.length > e.target.max.length ||
-    parseInt(e.target.value) > 30
-  ) {
+    e.target.value.length > e.target.max.length || parseInt(e.target.value) > 30){
     if (e.target.value.length > e.target.max.length) {
       e.target.value = e.target.value.slice(0, e.target.max.length);
     } else {
@@ -15,27 +12,28 @@ document.querySelector(".guess").addEventListener("input", (e) => {
     }
   }
 });
-//Функция для вывода сообщения ( больше число, меньше или вообще ничего )
+
 const showMessage = (msg) => {
   document.querySelector(".guessing").textContent = msg;
 };
 document.querySelector(".check").addEventListener("click", () => {
-  //Получаем значения из инпута при клики
+
   const guess = Number(document.querySelector(".guess").value);
-  console.log(guess); //Получили
+  console.log(guess);
   if (!guess) {
     showMessage("⛔  No number");
   } else if (guess === randomNumber) {
     showMessage("🎉 Correct!");
     document.body.style.background = "#5da341";
     document.querySelector(".number").textContent = guess;
+    document.querySelector('.guess').setAttribute('disabled','disabled')
     if (score > highscore) {
       highscore = score;
       document.querySelector(".highscore__score").textContent = score;
     }
-    //Если угадали, то выводим. + добавляем попытки ( 20 ) в HighScore
+
   }
-  //Когда не угадали + score наш больше нуля
+
   else if (guess !== randomNumber) {
     if (score > 1) {
       showMessage(guess > randomNumber ? "📈 Too high" : "📉 Too low");
@@ -44,6 +42,8 @@ document.querySelector(".check").addEventListener("click", () => {
     } else {
       showMessage("💀 You lost the game");
       document.querySelector(".attempt").textContent = 0;
+      document.querySelector('.guess').setAttribute('disabled','disabled')
+
     }
   }
 });
@@ -55,6 +55,6 @@ document.querySelector(".again").addEventListener("click", () => {
   document.querySelector(".number").textContent = "?";
   document.querySelector(".guess").value = "";
   document.querySelector("body").style.background = "#222";
+  document.querySelector('.guess').removeAttribute('disabled')
+
 });
-//Есть несколько багов. Юзер может повторно кликать на элемент
-//Значение в инпуте может изменяться до миллиардов || FIXED
